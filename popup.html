@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>BBOT Scan</title>
+</head>
+<body>
+  <h1>BBOT Scan</h1>
+
+  <label>Target:</label>
+  <input id="targetInput" placeholder="example.com">
+  
+  <label>Allow Deadly</label>
+  <select id="deadly">
+    <option value="--allow-deadly">YES</option>
+    <option value=" ">NO</option>
+  </select>
+
+  <label>Scan Type:</label>
+  <select id="scanSelect">
+    <option value="baddns-thorough">BAD DNS Thorough</option>
+    <option value="cloud-enum">Cloud Enumeration</option>
+    <option value="code-enum">Code Enumeration</option>
+    <option value="dirbust-heavy">Directory Brute-force (Heavy)</option>
+    <option value="dirbust-light">Directory Brute-force (Light)</option>
+    <option value="dotnet-audit">.NET/IIS Audit</option>
+    <option value="email-enum">Email Enumeration</option>
+    <option value="iis-shortnames">IIS Shortname Enumeration</option>
+    <option value="kitchen-sink">Kitchen Sink (All Modules)</option>
+    <option value="paramminer">Parameter Brute-force</option>
+    <option value="spider">Web Spider</option>
+    <option value="subdomain-enum">Subdomain Enumeration</option>
+    <option value="web-basic">Basic Web Scan</option>
+    <option value="web-screenshots">Web Screenshot Capture</option>
+    <option value="web-thorough">Thorough Web Scan</option>
+  </select>
+
+  <button id="runScanBtn">Run Scan</button>
+  <button id="clearOutputBtn">Clear Output</button>
+  <button id="clearHostsBtn">Clear Targets</button>
+
+  <hr>
+  <h2>Scan Output</h2>
+  <pre id="outputArea" style="white-space: pre-wrap; max-height: 300px; overflow-y: auto;"></pre>
+
+  <h2>Scanned Targets</h2>
+  <pre id="hostsArea" style="white-space: pre-wrap; max-height: 100px; overflow-y: auto;"></pre>
+
+  <script src="popup.js"></script>
+</body>
+</html>
