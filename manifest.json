@@ -3,7 +3,7 @@
   "name": "BBOT Scan",
   "version": "1.0",
   "description": "A simple BBOT scanner extension.",
-  "permissions": ["nativeMessaging"],
+  "permissions": ["nativeMessaging", "history"],
   "browser_action": {
     "default_popup": "popup.html"
   },

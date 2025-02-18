@@ -1,9 +1,9 @@
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener("DOMContentLoaded", async () => {
     const runScanBtn = document.getElementById("runScanBtn");
     const clearOutputBtn = document.getElementById("clearOutputBtn");
     const clearHostsBtn = document.getElementById("clearHostsBtn");
+    const targetDropdown = document.getElementById("targetInput"); // Now a <select>
     
-    const targetInput = document.getElementById("targetInput");
     const scanSelect = document.getElementById("scanSelect");
     const eventTypeSelect = document.getElementById("eventTypeSelect");
     const deadlySelect = document.getElementById("deadly");
@@ -14,9 +14,41 @@ document.addEventListener("DOMContentLoaded", () => {
     const burpsuite = document.getElementById("burpsuite");
     const viewPreset = document.getElementById("viewPreset");
     const strictScope = document.getElementById("strictScope");
-    // Request stored scan output and hosts when the popup opens
-    browser.runtime.sendMessage({ type: "getOutput" });
-    browser.runtime.sendMessage({ type: "getHosts" });
+
+    // Function to fetch recent domains
+    async function fetchRecentDomains() {
+        try {
+            const historyItems = await browser.history.search({ text: "", maxResults: 10 }); // Get last 10 history items
+            let uniqueDomains = new Set();
+
+            historyItems.forEach(item => {
+                try {
+                    let urlObj = new URL(item.url);
+                    uniqueDomains.add(urlObj.hostname); // Extract domain
+                } catch (e) {
+                    console.error("Invalid URL:", item.url);
+                }
+            });
+
+            // Populate the dropdown with domains
+            targetDropdown.innerHTML = ""; // Clear previous options
+            uniqueDomains.forEach(domain => {
+                let option = document.createElement("option");
+                option.value = domain;
+                option.textContent = domain;
+                targetDropdown.appendChild(option);
+            });
+
+            // Set the most recent domain as selected
+            if (targetDropdown.options.length > 0) {
+                targetDropdown.selectedIndex = 0;
+            }
+        } catch (error) {
+            console.error("Error fetching history:", error);
+        }
+    }
+
+    await fetchRecentDomains(); // Load recent domains when popup opens
 
     // Listen for updates from background.js
     browser.runtime.onMessage.addListener((message) => {
@@ -31,21 +63,19 @@ document.addEventListener("DOMContentLoaded", () => {
     // When user clicks "Run Scan"
     runScanBtn.addEventListener("click", () => {
         outputArea.textContent += "SCAN RUNNING:\n";
-        const targetVal = targetInput.value.trim();
+        const targetVal = targetDropdown.value.trim(); // Get selected domain
         const scanVal = scanSelect.value;
         const deadlyVal = deadlySelect.value.trim();
         const burpVal = burpsuite.checked;
 
-        // If no event type is selected, default to "*"
         const eventTypeVal = eventTypeSelect.value.trim() || "*";
-        const modDepsVal   = moduleSelect.value.trim();
-        console.log("Selected Module Dependency:", modDepsVal);
-
+        const modDepsVal = moduleSelect.value.trim();
         const flagVal = flagSelect.value.trim();
         const viewPresetVal = viewPreset.checked;
         const scopeVal = strictScope.checked;
+
         if (!targetVal) {
-            outputArea.textContent += "Error: No target specified.\n";
+            outputArea.textContent += "Error: No target selected.\n";
             return;
         }
 
@@ -66,12 +96,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // When user clicks "Clear Output"
     clearOutputBtn.addEventListener("click", () => {
-        browser.runtime.sendMessage({ type: "clearOutput" }); // Tell background.js to clear the output
+        browser.runtime.sendMessage({ type: "clearOutput" });
     });
 
     // When user clicks "Clear Hosts"
     clearHostsBtn.addEventListener("click", () => {
-        browser.runtime.sendMessage({ type: "clearHosts" }); // Tell background.js to clear the scanned targets list
+        browser.runtime.sendMessage({ type: "clearHosts" });
     });
 });
-
