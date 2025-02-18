@@ -2,6 +2,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     const runScanBtn = document.getElementById("runScanBtn");
     const clearOutputBtn = document.getElementById("clearOutputBtn");
     const clearHostsBtn = document.getElementById("clearHostsBtn");
+    const getOutputBtn = document.getElementById("getOutputBtn");
     const targetDropdown = document.getElementById("targetInput"); // Now a <select>
     const getUrlsBtn = document.getElementById("getUrlsBtn");
     const scanSelect = document.getElementById("scanSelect");
@@ -102,6 +103,9 @@ document.addEventListener("DOMContentLoaded", async () => {
     });
     getUrlsBtn.addEventListener("click", () => {
         browser.runtime.sendMessage({ type: "getURLS" });
+    });
+    getOutputBtn.addEventListener("click", () => {
+        browser.runtime.sendMessage({ type: "getOutput" });
     });
 
     // When user clicks "Clear Hosts"

@@ -1,6 +1,5 @@
 // background.js
-const logMarkerRegex = /\b[A-Za-z0-9.-]+\.com\b/g;
-const urlRegex = /https?:\/\/[^\s/$.?#].[^\s]*/gi;
+const URLs = /\b[A-Za-z0-9.-]+\.com\b/g;
 let port = null;
 let scanOutput = ""; // Store all BBOT output persistently while Firefox is running
 let hosts = new Set(); // Store unique scan targets
@@ -26,17 +25,17 @@ function connectNative() {
 function extractInfo(scanOutput) {
     console.log("Raw Scan Output:", scanOutput); // Log full output
     
-    const markers = scanOutput.match(logMarkerRegex);
+    const markers = scanOutput.match(URLs);
     
     console.log("Extracted Markers:", markers);
     
     return { markers };
 }
 
-// Connect when the extension loads
+
 connectNative();
 
-// Listen for scan requests and clear requests from popup.js
+
 browser.runtime.onMessage.addListener((msg) => {
     if (!port) {
         connectNative();
@@ -74,7 +73,7 @@ browser.runtime.onMessage.addListener((msg) => {
         browser.runtime.sendMessage({ type: "updateHosts", data: "" }); // Notify popup
     } else if (msg.type === "getURLS") {
         const extractedData = extractInfo(scanOutput);
-        let formattedOutput = `Extracted Markers:\n${extractedData.markers.join(',')}`;
+        let formattedOutput = `Extracted Markers:\n${extractedData.markers.join('\n')}`;
         console.log("Extracted Data Sent:", formattedOutput); // Debugging log
         browser.runtime.sendMessage({ type: "updateOutput", data: formattedOutput });
     }
