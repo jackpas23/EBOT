@@ -66,7 +66,7 @@ browser.runtime.onMessage.addListener((msg) => {
     } else if (msg.type === "getOutput") {
         browser.runtime.sendMessage({ type: "updateOutput", data: scanOutput }); // Send stored output to popup
     } else if (msg.type === "getHosts") {
-        browser.runtime.sendMessage({ type: "updateHosts", data: Array.from(hosts).join("\n") }); // Send list of scanned hosts
+        browser.runtime.sendMessage({ type: "updateHosts", data: Array.from(hosts).join('\n') }); // Send list of scanned hosts
     } else if (msg.type === "clearOutput") {
         scanOutput = ""; // Clear stored output
         browser.runtime.sendMessage({ type: "updateOutput", data: scanOutput }); // Notify popup
