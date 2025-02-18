@@ -14,7 +14,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     const burpsuite = document.getElementById("burpsuite");
     const viewPreset = document.getElementById("viewPreset");
     const strictScope = document.getElementById("strictScope");
-
+    browser.runtime.sendMessage({ type: "getOutput" });
     // Function to fetch recent domains
     async function fetchRecentDomains() {
         try {
