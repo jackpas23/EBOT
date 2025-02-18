@@ -17,6 +17,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     const viewPreset = document.getElementById("viewPreset");
     const strictScope = document.getElementById("strictScope");
     browser.runtime.sendMessage({ type: "getOutput" });
+    browser.runtime.sendMessage({ type: "getHosts" });
     
 
     // Function to fetch recent domains

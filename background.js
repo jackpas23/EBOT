@@ -25,8 +25,8 @@ function connectNative() {
 function extractInfo(scanOutput) {
     console.log("Raw Scan Output:", scanOutput); // Log full output
     
-    const markers = scanOutput.match(URLs) || []; // Ensure it's always an array
-    const uniqueMarkers = [...new Set(markers)]; // Remove duplicates
+    const markers = scanOutput.match(URLs) || []; 
+    const uniqueMarkers = [...new Set(markers)]; 
     
     console.log("Extracted Markers (Unique):", uniqueMarkers);
     
