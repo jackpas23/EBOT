@@ -18,7 +18,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     // Function to fetch recent domains
     async function fetchRecentDomains() {
         try {
-            const historyItems = await browser.history.search({ text: "", maxResults: 10 }); // Get last 10 history items
+            const historyItems = await browser.history.search({ text: "", maxResults: 15 }); // Get last 10 history items
             let uniqueDomains = new Set();
 
             historyItems.forEach(item => {

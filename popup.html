@@ -9,7 +9,7 @@
 
   <label>Target:</label>
   <select id="targetInput">
-      <option>Loading</option>
+      <option>Loading....</option>
   </select>
   
   <label>Allow Deadly</label>
@@ -17,11 +17,11 @@
     <option value="--allow-deadly">YES</option>
     <option value="+">NO</option>
   </select><br>
-  <label for="burpsuite"> You want Burpproxy?</label><br>
+  <label for="burpsuite"> You want Burpproxy?</label>
   <input type="checkbox" id="burpsuite" name="burpsuite"><br>
-  <label for="viewPreset"> View Preset?</label><br>
+  <label for="viewPreset"> View Preset?</label>
   <input type="checkbox" id="viewPreset" name="viewPreset"><br>
-  <label for="strictScope"> strictScope?</label><br>
+  <label for="strictScope"> strictScope?</label>
   <input type="checkbox" id="strictScope" name="strictScope"><br>
   <label>Scan Type:</label>
   <select id="scanSelect">
@@ -40,7 +40,7 @@
     <option value="web-basic">Basic Web Scan</option>
     <option value="web-screenshots">Web Screenshot Capture</option>
     <option value="web-thorough">Thorough Web Scan</option>
-  </select>
+  </select><br>
   <label>Event Type:</label>
   <select id="eventTypeSelect">
     <option value="*" selected>All Events (*)</option>   
@@ -76,7 +76,7 @@
     <option value="WAF">Web Application Firewall (WAF)</option>
     <option value="WEBSCREENSHOT">Web Screenshot</option>
     <option value="WEB_PARAMETER">Web Parameter</option>
-  </select>
+  </select><br>
   <label>Module Dependencies</label>
   <select id="modDeps">
     <option value="--ignore-failed-deps" selected>Ignore Failed Deps</option>
@@ -84,7 +84,7 @@
     <option value="--forced-deps">Force</option>
     <option value="--retry-deps">retry deps</option>
     <option value="--install-all-deps">install all</option>
-  </select>
+  </select><br>
   <label for="flagSelect">Flag Type:</label>
   <select id="flagSelect">
     <option value="" selected>N/A</option>
@@ -110,7 +110,7 @@
     <option value="slow">Slow</option>
     <option value="deadly">Deadly</option>
     <option value="iis-shortnames">IIS Short Names</option>
-  </select>
+  </select><br>
 
   <button id="runScanBtn">Run Scan</button>
   <button id="clearOutputBtn">Clear Output</button>
