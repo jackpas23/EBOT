@@ -24,9 +24,9 @@ def read_message():
               (ord(raw_length[3]) << 24))
     return json.loads(sys.stdin.read(length))
 
-def run_scan(target, scantype, deadly):
+def run_scan(target, scantype, deadly, eventtype):
     """Run BBOT and return the final output."""
-    cmd = ["bbot", "-t", target, "-y", "-p", scantype, deadly, "-s"]
+    cmd = ["bbot", "-t", target, "-y", "-p", scantype, deadly, "--event-types", eventtype]
     result = subprocess.run(cmd, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, text=True)
     return result.stdout if result.stdout else "No output from BBOT."
 
@@ -37,7 +37,7 @@ def main():
             break
 
         if msg.get("command") == "scan":
-            output = run_scan(msg.get("target", ""), msg.get("scantype", ""),msg.get("deadly",""))
+            output = run_scan(msg.get("target", ""), msg.get("scantype", ""),msg.get("deadly",""),msg.get("eventtype",""))
             send_message({"type": "scanResult", "data": output})
         else:
             send_message({"type": "error", "data": "Unknown command"})

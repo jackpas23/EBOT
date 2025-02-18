@@ -2,7 +2,7 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>BBOT Scan</title>
+  <title>BBOT Runner</title>
 </head>
 <body>
   <h1>BBOT Scan</h1>
@@ -13,7 +13,7 @@
   <label>Allow Deadly</label>
   <select id="deadly">
     <option value="--allow-deadly">YES</option>
-    <option value=" ">NO</option>
+    <option value="+">NO</option>
   </select>
 
   <label>Scan Type:</label>
@@ -34,6 +34,45 @@
     <option value="web-screenshots">Web Screenshot Capture</option>
     <option value="web-thorough">Thorough Web Scan</option>
   </select>
+  <label>Event Type:</label>
+  <select id="eventTypeSelect">
+    <option value="*" selected>All Events (*)</option>   
+    <option value="ASN">ASN</option>
+    <option value="AZURE_TENANT">Azure Tenant</option>
+    <option value="CODE_REPOSITORY">Code Repository</option>
+    <option value="DNS_NAME">DNS Name</option>
+    <option value="DNS_NAME_UNRESOLVED">Unresolved DNS Name</option>
+    <option value="EMAIL_ADDRESS">Email Address</option>
+    <option value="FILESYSTEM">Filesystem</option>
+    <option value="FINDING">Finding</option>
+    <option value="GEOLOCATION">Geolocation</option>
+    <option value="HASHED_PASSWORD">Hashed Password</option>
+    <option value="HTTP_RESPONSE">HTTP Response</option>
+    <option value="IP_ADDRESS">IP Address</option>
+    <option value="IP_RANGE">IP Range</option>
+    <option value="MOBILE_APP">Mobile App</option>
+    <option value="OPEN_TCP_PORT">Open TCP Port</option>
+    <option value="ORG_STUB">Organization Stub</option>
+    <option value="PASSWORD">Password</option>
+    <option value="PROTOCOL">Protocol</option>
+    <option value="RAW_DNS_RECORD">Raw DNS Record</option>
+    <option value="RAW_TEXT">Raw Text</option>
+    <option value="SOCIAL">Social</option>
+    <option value="STORAGE_BUCKET">Storage Bucket</option>
+    <option value="TECHNOLOGY">Technology</option>
+    <option value="URL">URL</option>
+    <option value="URL_HINT">URL Hint</option>
+    <option value="URL_UNVERIFIED">Unverified URL</option>
+    <option value="USERNAME">Username</option>
+    <option value="VHOST">Virtual Host (VHOST)</option>
+    <option value="VULNERABILITY">Vulnerability</option>
+    <option value="WAF">Web Application Firewall (WAF)</option>
+    <option value="WEBSCREENSHOT">Web Screenshot</option>
+    <option value="WEB_PARAMETER">Web Parameter</option>
+  </select>
+
+
+
 
   <button id="runScanBtn">Run Scan</button>
   <button id="clearOutputBtn">Clear Output</button>
