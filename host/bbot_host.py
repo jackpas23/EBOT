@@ -27,7 +27,7 @@ def read_message():
 def run_scan(target, scantype, deadly, eventtype):
     """Run BBOT and return the final output."""
     cmd = ["bbot", "-t", target, "-y", "-p", scantype, deadly, "--event-types", eventtype]
-    result = subprocess.run(cmd, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, text=True)
+    result = subprocess.run(cmd, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, text=True, bufsize=1)
     return result.stdout if result.stdout else "No output from BBOT."
 
 def main():
