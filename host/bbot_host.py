@@ -36,7 +36,7 @@ def run_scan(target, scantype, deadly, eventtype, moddep, flagtype, burp, viewty
 
     if burp:
         cmd.append("-c")
-        cmd.append("web.http_proxy=http://127.0.0.1:8080")  # ✅ Corrected format
+        cmd.append("web.http_proxy=http://127.0.0.1:8080")
 
     if viewtype:
         cmd.append("--current-preset")
