@@ -8,7 +8,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const eventTypeSelect = document.getElementById("eventTypeSelect");
     const deadlySelect = document.getElementById("deadly");
     const moduleSelect = document.getElementById("modDeps");
-
+    const flagSelect = document.getElementById("flagSelect");
     const outputArea = document.getElementById("outputArea");
     const hostsArea = document.getElementById("hostsArea");
 
@@ -37,6 +37,8 @@ document.addEventListener("DOMContentLoaded", () => {
         const eventTypeVal = eventTypeSelect.value.trim() || "*";
         const modDepsVal   = moduleSelect.value.trim();
         console.log("Selected Module Dependency:", modDepsVal);
+
+        const flagVal = flagSelect.value.trim();
         if (!targetVal) {
             outputArea.textContent += "Error: No target specified.\n";
             return;
@@ -49,7 +51,8 @@ document.addEventListener("DOMContentLoaded", () => {
             scanType: scanVal,
             deadly: deadlyVal,
             eventType: eventTypeVal,
-            moddep: modDepsVal
+            moddep: modDepsVal,
+            flagType: flagVal
         });
     });
 

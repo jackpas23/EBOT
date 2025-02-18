@@ -78,6 +78,32 @@
     <option value="--retry-deps">retry deps</option>
     <option value="--install-all-deps">install all</option>
   </select>
+  <label for="flagSelect">Flag Type:</label>
+  <select id="flagSelect">
+    <option value="" selected>N/A</option>
+    <option value="web-thorough">Web Thorough</option>
+    <option value="portscan">Port Scan</option>
+    <option value="service-enum">Service Enumeration</option>
+    <option value="passive">Passive</option>
+    <option value="subdomain-enum">Subdomain Enumeration</option>
+    <option value="web-basic">Web Basic</option>
+    <option value="code-enum">Code Enumeration</option>
+    <option value="social-enum">Social Enumeration</option>
+    <option value="safe">Safe</option>
+    <option value="cloud-enum">Cloud Enumeration</option>
+    <option value="report">Report</option>
+    <option value="baddns">Bad DNS</option>
+    <option value="web-paramminer">Web Parameter Miner</option>
+    <option value="subdomain-hijack">Subdomain Hijack</option>
+    <option value="active">Active</option>
+    <option value="aggressive">Aggressive</option>
+    <option value="email-enum">Email Enumeration</option>
+    <option value="affiliates">Affiliates</option>
+    <option value="web-screenshots">Web Screenshots</option>
+    <option value="slow">Slow</option>
+    <option value="deadly">Deadly</option>
+    <option value="iis-shortnames">IIS Short Names</option>
+  </select>
 
   <button id="runScanBtn">Run Scan</button>
   <button id="clearOutputBtn">Clear Output</button>
