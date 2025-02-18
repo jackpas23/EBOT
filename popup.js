@@ -3,7 +3,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     const clearOutputBtn = document.getElementById("clearOutputBtn");
     const clearHostsBtn = document.getElementById("clearHostsBtn");
     const targetDropdown = document.getElementById("targetInput"); // Now a <select>
-    
+    const getUrlsBtn = document.getElementById("getUrlsBtn");
     const scanSelect = document.getElementById("scanSelect");
     const eventTypeSelect = document.getElementById("eventTypeSelect");
     const deadlySelect = document.getElementById("deadly");
@@ -15,6 +15,8 @@ document.addEventListener("DOMContentLoaded", async () => {
     const viewPreset = document.getElementById("viewPreset");
     const strictScope = document.getElementById("strictScope");
     browser.runtime.sendMessage({ type: "getOutput" });
+    
+
     // Function to fetch recent domains
     async function fetchRecentDomains() {
         try {
@@ -97,6 +99,9 @@ document.addEventListener("DOMContentLoaded", async () => {
     // When user clicks "Clear Output"
     clearOutputBtn.addEventListener("click", () => {
         browser.runtime.sendMessage({ type: "clearOutput" });
+    });
+    getUrlsBtn.addEventListener("click", () => {
+        browser.runtime.sendMessage({ type: "getURLS" });
     });
 
     // When user clicks "Clear Hosts"
