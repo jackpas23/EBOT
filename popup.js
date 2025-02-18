@@ -13,6 +13,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const hostsArea = document.getElementById("hostsArea");
     const burpsuite = document.getElementById("burpsuite");
     const viewPreset = document.getElementById("viewPreset");
+    const strictScope = document.getElementById("strictScope");
     // Request stored scan output and hosts when the popup opens
     browser.runtime.sendMessage({ type: "getOutput" });
     browser.runtime.sendMessage({ type: "getHosts" });
@@ -42,6 +43,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         const flagVal = flagSelect.value.trim();
         const viewPresetVal = viewPreset.checked;
+        const scopeVal = strictScope.checked;
         if (!targetVal) {
             outputArea.textContent += "Error: No target specified.\n";
             return;
@@ -57,7 +59,8 @@ document.addEventListener("DOMContentLoaded", () => {
             moddep: modDepsVal,
             flagType: flagVal,
             burp: burpVal,
-            viewtype: viewPresetVal
+            viewtype: viewPresetVal,
+            scope: scopeVal
         });
     });
 

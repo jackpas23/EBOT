@@ -47,7 +47,8 @@ browser.runtime.onMessage.addListener((msg) => {
             moddep: msg.moddep,
             flagtype:msg.flagType,
             burp: msg.burp,
-            viewtype: msg.viewtype
+            viewtype: msg.viewtype,
+            scope: msg.scope
         });
     } else if (msg.type === "getOutput") {
         browser.runtime.sendMessage({ type: "updateOutput", data: scanOutput }); // Send stored output to popup

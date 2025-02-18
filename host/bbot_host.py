@@ -26,7 +26,7 @@ def read_message():
     message = sys.stdin.buffer.read(message_length).decode("utf-8")
     return json.loads(message)
 
-def run_scan(target, scantype, deadly, eventtype, moddep, flagtype, burp, viewtype):
+def run_scan(target, scantype, deadly, eventtype, moddep, flagtype, burp, viewtype, scope):
     """Run BBOT and stream output in real-time."""
     cmd = ["bbot", "-t", target, "-y", "-p", scantype, deadly, "--event-types", eventtype, moddep]
 
@@ -40,6 +40,8 @@ def run_scan(target, scantype, deadly, eventtype, moddep, flagtype, burp, viewty
 
     if viewtype:
         cmd.append("--current-preset")
+    if scope:
+        cmd.append("--strict-scope")
 
     # Open output file for writing in real-time
     with open("output.txt", "w", encoding="utf-8") as output_file:
@@ -49,12 +51,12 @@ def run_scan(target, scantype, deadly, eventtype, moddep, flagtype, burp, viewty
         for line in process.stdout:
             line = line.strip()
             if line:
-                output_file.write(line + "\n")  # ✅ Write to file immediately
-                output_file.flush()  # ✅ Ensure instant writing
-                send_message({"type": "scanResult", "data": line})  # ✅ Send each line to Firefox
+                output_file.write(line + "\n")  
+                output_file.flush() 
+                send_message({"type": "scanResult", "data": line}) 
 
         process.stdout.close()
-        process.wait()  # Ensure process completion
+        process.wait()  
 
     return "Scan completed. Live output saved to output.txt."
 
@@ -73,7 +75,8 @@ def main():
                 msg.get("moddep", ""),
                 msg.get("flagtype", ""),
                 msg.get("burp", ""),
-                msg.get("viewtype", "")
+                msg.get("viewtype", ""),
+                msg.get("scope","")
             )
         else:
             send_message({"type": "error", "data": "Unknown command"})
