@@ -25,12 +25,17 @@ def read_message():
     # Read the actual JSON message
     message = sys.stdin.buffer.read(message_length).decode("utf-8")
     return json.loads(message)
-def run_scan(target, scantype, deadly, eventtype, moddep, flagtype):
+def run_scan(target, scantype, deadly, eventtype, moddep, flagtype, burp, viewtype):
     """Run BBOT and return the final output."""
     cmd = ["bbot", "-t", target, "-y", "-p", scantype, deadly, "--event-types", eventtype, moddep]
     if flagtype:
        cmd.append("-f")
        cmd.append(flagtype)
+    if burp:
+       cmd.append("-c")
+       cmd.append("web.http_proxy='http://127.0.0.1:8080'")
+    if viewtype:
+       cmd.append("--current-preset")
     result = subprocess.run(cmd, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, text=True, bufsize=1)
     return result.stdout if result.stdout else "No output from BBOT."
 
@@ -41,7 +46,7 @@ def main():
             break
 
         if msg.get("command") == "scan":
-            output = run_scan(msg.get("target", ""), msg.get("scantype", ""),msg.get("deadly",""),msg.get("eventtype",""),msg.get("moddep",""),msg.get("flagtype",""))
+            output = run_scan(msg.get("target", ""), msg.get("scantype", ""),msg.get("deadly",""),msg.get("eventtype",""),msg.get("moddep",""),msg.get("flagtype",""),msg.get("burp",""),msg.get("viewtype",""))
             send_message({"type": "scanResult", "data": output})
         else:
             send_message({"type": "error", "data": "Unknown command"})

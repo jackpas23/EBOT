@@ -11,7 +11,8 @@ document.addEventListener("DOMContentLoaded", () => {
     const flagSelect = document.getElementById("flagSelect");
     const outputArea = document.getElementById("outputArea");
     const hostsArea = document.getElementById("hostsArea");
-
+    const burpsuite = document.getElementById("burpsuite");
+    const viewPreset = document.getElementById("viewPreset");
     // Request stored scan output and hosts when the popup opens
     browser.runtime.sendMessage({ type: "getOutput" });
     browser.runtime.sendMessage({ type: "getHosts" });
@@ -32,6 +33,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const targetVal = targetInput.value.trim();
         const scanVal = scanSelect.value;
         const deadlyVal = deadlySelect.value.trim();
+        const burpVal = burpsuite.checked;
 
         // If no event type is selected, default to "*"
         const eventTypeVal = eventTypeSelect.value.trim() || "*";
@@ -39,6 +41,7 @@ document.addEventListener("DOMContentLoaded", () => {
         console.log("Selected Module Dependency:", modDepsVal);
 
         const flagVal = flagSelect.value.trim();
+        const viewPresetVal = viewPreset.checked;
         if (!targetVal) {
             outputArea.textContent += "Error: No target specified.\n";
             return;
@@ -52,7 +55,9 @@ document.addEventListener("DOMContentLoaded", () => {
             deadly: deadlyVal,
             eventType: eventTypeVal,
             moddep: modDepsVal,
-            flagType: flagVal
+            flagType: flagVal,
+            burp: burpVal,
+            viewtype: viewPresetVal
         });
     });
 
