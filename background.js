@@ -3,7 +3,6 @@
 let port = null;
 let scanOutput = ""; // Store all BBOT output persistently while Firefox is running
 let hosts = new Set(); // Store unique scan targets
-
 function connectNative() {
     port = browser.runtime.connectNative("bbot_host");
 
@@ -44,7 +43,8 @@ browser.runtime.onMessage.addListener((msg) => {
             target: msg.target,
             scantype: msg.scanType,
             deadly: msg.deadly,
-            eventtype: eventType
+            eventtype: eventType,
+            moddep: msg.moddep
         });
     } else if (msg.type === "getOutput") {
         browser.runtime.sendMessage({ type: "updateOutput", data: scanOutput }); // Send stored output to popup

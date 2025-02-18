@@ -70,9 +70,14 @@
     <option value="WEBSCREENSHOT">Web Screenshot</option>
     <option value="WEB_PARAMETER">Web Parameter</option>
   </select>
-
-
-
+  <label>Module Dependencies</label>
+  <select id="modDeps">
+    <option value="--ignore-failed-deps" selected>Ignore Failed Deps</option>
+    <option value="--no-deps">Don't install deps.</option>
+    <option value="--forced-deps">Force</option>
+    <option value="--retry-deps">retry deps</option>
+    <option value="--install-all-deps">install all</option>
+  </select>
 
   <button id="runScanBtn">Run Scan</button>
   <button id="clearOutputBtn">Clear Output</button>
