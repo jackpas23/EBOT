@@ -1,5 +1,5 @@
 // background.js
-const URLs = /\b[A-Za-z0-9.-]+\.com\b/g;
+const URLs = /\b(?:[a-zA-Z0-9-]+\.)+[a-zA-Z]{2,}\b/g;
 let port = null;
 let scanOutput = ""; // Store all BBOT output persistently while Firefox is running
 let hosts = new Set(); // Store unique scan targets
@@ -25,12 +25,14 @@ function connectNative() {
 function extractInfo(scanOutput) {
     console.log("Raw Scan Output:", scanOutput); // Log full output
     
-    const markers = scanOutput.match(URLs);
+    const markers = scanOutput.match(URLs) || []; // Ensure it's always an array
+    const uniqueMarkers = [...new Set(markers)]; // Remove duplicates
     
-    console.log("Extracted Markers:", markers);
+    console.log("Extracted Markers (Unique):", uniqueMarkers);
     
-    return { markers };
+    return { markers: uniqueMarkers };
 }
+
 
 
 connectNative();

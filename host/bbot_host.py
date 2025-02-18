@@ -28,7 +28,7 @@ def read_message():
 
 def run_scan(target, scantype, deadly, eventtype, moddep, flagtype, burp, viewtype, scope):
     """Run BBOT and stream output in real-time."""
-    cmd = ["bbot", "-t", target, "-y", "-p", scantype, deadly, "--event-types", eventtype, moddep]
+    cmd = ["bbot", "-t", target, "-y", "-p", scantype, deadly, "--event-types", eventtype, moddep, "-v"]
 
     if flagtype:
         cmd.append("-f")
