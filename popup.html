@@ -7,11 +7,13 @@
 <body>
   <h1>BBOT Scan &#128049</h1>
   <h3>I am from the government I am here to help</h3>
+  <h2>Scanned Targets</h2>
+  <pre id="hostsArea" style="white-space: pre-wrap; max-height: 400px; overflow-y: auto;"></pre>
 
   <label>Target:</label>
   <select id="targetInput">
       <option>Loading....</option>
-  </select>
+  </select><br>
   
   <label>Allow Deadly</label>
   <select id="deadly">
@@ -112,9 +114,6 @@
     <option value="deadly">Deadly</option>
     <option value="iis-shortnames">IIS Short Names</option>
   </select><br>
-  
-  
-    </object>
   <button id="runScanBtn">Run Scan</button>
   <button id="getOutfileBtn">Get Outfiles</button>
   <button id="clearOutputBtn">Clear Output</button>
@@ -126,9 +125,8 @@
   <h2>Scan Output</h2>
   <pre id="outputArea" style="white-space: pre-wrap;font-weight: 200; color: green;max-height: 300px; overflow-y: auto;"></pre>
 
-  <h2>Scanned Targets</h2>
-  <pre id="hostsArea" style="white-space: pre-wrap; max-height: 400px; overflow-y: auto;"></pre>
   
+   
   <script src="popup.js"></script>
 </body>
 </html>
