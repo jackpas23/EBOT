@@ -31,7 +31,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
         // ✅ **Preserve first static option (test path)**
         const staticOptions = `
-            <option value="/home/flaxo/.bbot/scans/moist_craig/subdomains.txt">test path</option>
+            <option value="/home/flaxo/.bbot/scans/moist_craig/subdomains.txt">test path*DEBUGGING*</option>
         `;
 
         // ✅ **Generate new options**
