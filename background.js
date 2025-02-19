@@ -4,6 +4,7 @@ const logOutputs = /\/home\/[^\/]+\/\.bbot\/scans\/[^\/]+\/\S+/g;
 
 let port = null;
 let scanOutput = ""; // Store all BBOT output persistently while Firefox is running
+let subdomains ="";
 let hosts = new Set();
 function connectNative() {
     port = browser.runtime.connectNative("bbot_host");
@@ -46,9 +47,27 @@ function extractOutput(scanOutput) {
 }
 
 
-
 connectNative();
 
+function fetchSubdomains(filePath) {
+    return new Promise((resolve, reject) => {
+        browser.runtime.sendNativeMessage("bbot_host", { command: "getSubdomains", subdomains: filePath })
+            .then(response => {
+                if (response.error) {
+                    console.error("Error loading subdomains:", response.error);
+                    reject("Failed to load subdomains.");
+                } else {
+                    console.log("Subdomains:", response.data);
+                    subdomains = response.data; // Store subdomains
+                    resolve(response.data);
+                }
+            })
+            .catch(error => {
+                console.error("Native Message Error:", error);
+                reject("Error communicating with bbot_host.");
+            });
+    });
+}
 
 browser.runtime.onMessage.addListener((msg) => {
     if (!port) {
@@ -76,7 +95,7 @@ browser.runtime.onMessage.addListener((msg) => {
             scope: msg.scope
         });
     } else if (msg.type === "getOutput") {
-        browser.runtime.sendMessage({ type: "updateOutput", data: scanOutput }); // Send stored output to popup
+        browser.runtime.sendMessage({ type: "updateOutput", data: scanOutput });
     } else if (msg.type === "getHosts") {
         browser.runtime.sendMessage({ type: "updateHosts", data: Array.from(hosts).join('\n') }); // Send list of scanned hosts
     } else if (msg.type === "clearOutput") {
@@ -93,8 +112,18 @@ browser.runtime.onMessage.addListener((msg) => {
 
     } else if (msg.type === "getOutfile") {
         const extractedData = extractOutput(scanOutput);
-        let formattedOutput = `Extracted Outfile:\n${extractedData.outputs.join('\n')}`;
-        console.log("Extracted Data Sent:", formattedOutput); // Debugging log
-        browser.runtime.sendMessage({ type: "updateOutput", data: formattedOutput });
+        console.log("Extracted Outfiles:", extractedData.outputs); // Debugging log
+    
+        if (extractedData.outputs.length > 0) {
+            browser.runtime.sendMessage({ type: "updateOutfileList", data: extractedData.outputs });
+        } else {
+            browser.runtime.sendMessage({ type: "updateOutfileList", data: ["No outfiles found"] });
+        }
+    } else if (msg.type === "getSubdomains") {
+        fetchSubdomains(msg.subdomains)
+            .then(data => browser.runtime.sendMessage({ type: "updateOutput", data: data }))
+            .catch(error => browser.runtime.sendMessage({ type: "updateOutput", data: error }));
+        
     }
 });
+

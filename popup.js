@@ -18,9 +18,31 @@ document.addEventListener("DOMContentLoaded", async () => {
     const burpsuite = document.getElementById("burpsuite");
     const viewPreset = document.getElementById("viewPreset");
     const strictScope = document.getElementById("strictScope");
+    const getSubdomainsBtn = document.getElementById("getSubdomainsBtn");
+    const getSubdomainsDropdown = document.getElementById("getSubdomains");
     browser.runtime.sendMessage({ type: "getOutput" });
     browser.runtime.sendMessage({ type: "getHosts" });
-    
+    function updateDropdown(filePaths) {
+        if (!filePaths || filePaths.length === 0) {
+            console.warn("No outfiles found.");
+            return;
+        }
+
+        // ✅ **Preserve first static option (test path)**
+        const staticOptions = `
+            <option value="/home/flaxo/.bbot/scans/moist_craig/subdomains.txt">test path</option>
+        `;
+
+        // ✅ **Generate new options**
+        let newOptions = filePaths.map(filePath => {
+            let fileName = filePath.split('/').pop(); // Extract only the filename
+            return `<option value="${filePath}">${fileName}</option>`;
+        }).join("");
+
+        // ✅ **Update the dropdown**
+        getSubdomainsDropdown.innerHTML = staticOptions + newOptions;
+        console.log("Dropdown updated successfully!");
+    }
 
     // Function to fetch recent domains
     async function fetchRecentDomains() {
@@ -116,6 +138,15 @@ document.addEventListener("DOMContentLoaded", async () => {
     });
     getOutfileBtn.addEventListener("click", () => {
         browser.runtime.sendMessage({ type: "getOutfile" });
+    });
+    browser.runtime.onMessage.addListener((message) => {
+        if (message.type === "updateOutfileList") {
+            updateDropdown(message.data);
+        }
+    });
+    getSubdomainsBtn.addEventListener("click", () => {
+        const selectedPath = getSubdomains.value;
+        browser.runtime.sendMessage({ type: "getSubdomains" , subdomains: selectedPath });
     });
 
     // When user clicks "Clear Hosts"

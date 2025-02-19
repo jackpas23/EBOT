@@ -12,7 +12,7 @@
 
   <label>Target:</label>
   <select id="targetInput">
-      <option>Loading....</option>
+    <option>Loading....</option>
   </select><br>
   
   <label>Allow Deadly</label>
@@ -115,19 +115,23 @@
     <option value="iis-shortnames">IIS Short Names</option>
   </select><br>
   <button id="runScanBtn">Run Scan</button>
-  <button id="getOutfileBtn">Get Outfiles</button>
   <button id="clearOutputBtn">Clear Output</button>
   <button id="clearHostsBtn">Clear Targets</button>
   <button id="getUrlsBtn">getURLS</button>
   <button id="getOutputBtn">Stream Output</button>
   <button id="getHostsBtn">Scanned Targets</button>
   <hr>
+  <label for="getSubdomains">getSubs:</label>
+  <select id="getSubdomains">
+    <option value="/home/flaxo/.bbot/scans/moist_craig/subdomains.txt">test path</option>
+    <option value="/home/flaxo/.bbot/scans/zesty_alexis/output.txt">test 2</option>
+  </select><br>
+  <button id="getSubdomainsBtn">Read File</button>
+  <button id="getOutfileBtn">Get Outfiles</button>
   <h2>Scan Output</h2>
   <pre id="outputArea" style="white-space: pre-wrap;font-weight: 200; color: green;max-height: 300px; overflow-y: auto;"></pre>
-
   
    
   <script src="popup.js"></script>
 </body>
 </html>
-<object type="text/html" data="https://web-check.xyz/check/https%3A%2F%2Fa.com" style="width:100%; height:100%"></object>
