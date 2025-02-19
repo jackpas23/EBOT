@@ -43,11 +43,11 @@ def run_scan(target, scantype, deadly, eventtype, moddep, flagtype, burp, viewty
     if scope:
         cmd.append("--strict-scope")
 
-    # Open output file for writing in real-time
+    
     with open("output.txt", "w", encoding="utf-8") as output_file:
         process = subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, text=True, bufsize=1, universal_newlines=True)
 
-        # Stream output in real-time
+        
         for line in process.stdout:
             line = line.strip()
             if line:
