@@ -3,6 +3,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     const clearOutputBtn = document.getElementById("clearOutputBtn");
     const getHostsBtn = document.getElementById("getHostsBtn");
     const getOutfileBtn = document.getElementById("getOutfileBtn");
+    const clearOutfileBtn = document.getElementById("clearOutfileBtn");
     const clearHostsBtn = document.getElementById("clearHostsBtn");
     const getOutputBtn = document.getElementById("getOutputBtn");
     const targetDropdown = document.getElementById("targetInput"); // Now a <select>
@@ -120,5 +121,8 @@ document.addEventListener("DOMContentLoaded", async () => {
     // When user clicks "Clear Hosts"
     clearHostsBtn.addEventListener("click", () => {
         browser.runtime.sendMessage({ type: "clearHosts" });
+    });
+    clearOutfileBtn.addEventListener("click", () => {
+        browser.runtime.sendMessage({ type: "clearOutfile" });
     });
 });

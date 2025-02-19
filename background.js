@@ -25,7 +25,7 @@ function connectNative() {
 }
 
 function extractInfo(scanOutput) {
-    console.log("Raw Scan Output:", scanOutput); 
+    console.log("Raw Scan Output:", scanOutput); // Log full output
     
     const markers = scanOutput.match(URLs) || []; 
     const uniqueMarkers = [...new Set(markers)];
