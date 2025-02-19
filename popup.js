@@ -21,6 +21,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     const getSubdomainsBtn = document.getElementById("getSubdomainsBtn");
     const getSubdomainsDropdown = document.getElementById("getSubdomains");
     browser.runtime.sendMessage({ type: "getOutput" });
+    browser.runtime.sendMessage({ type: "getOutfile" });
     browser.runtime.sendMessage({ type: "getHosts" });
     function updateDropdown(filePaths) {
         if (!filePaths || filePaths.length === 0) {
