@@ -1,8 +1,10 @@
 // background.js
 const URLs = /\b(?:[a-zA-Z0-9-]+\.)+[a-zA-Z]{2,}\b/g;
+const logOutputs = /\/home\/[^\/]+\/\.bbot\/scans\/[^\/]+\/\S+/g;
+
 let port = null;
 let scanOutput = ""; // Store all BBOT output persistently while Firefox is running
-let hosts = new Set(); // Store unique scan targets
+let hosts = new Set();
 function connectNative() {
     port = browser.runtime.connectNative("bbot_host");
 
@@ -23,14 +25,24 @@ function connectNative() {
 }
 
 function extractInfo(scanOutput) {
-    console.log("Raw Scan Output:", scanOutput); // Log full output
+    console.log("Raw Scan Output:", scanOutput); 
     
     const markers = scanOutput.match(URLs) || []; 
-    const uniqueMarkers = [...new Set(markers)]; 
+    const uniqueMarkers = [...new Set(markers)];
+    
     
     console.log("Extracted Markers (Unique):", uniqueMarkers);
     
     return { markers: uniqueMarkers };
+}
+function extractOutput(scanOutput) {
+    console.log("Raw Scan Output:", scanOutput); 
+    
+    const outputs = scanOutput.match(logOutputs) || [];
+    const uniqueOutputs = [...new Set(outputs)];
+
+    
+    return {outputs: uniqueOutputs };
 }
 
 
@@ -76,6 +88,12 @@ browser.runtime.onMessage.addListener((msg) => {
     } else if (msg.type === "getURLS") {
         const extractedData = extractInfo(scanOutput);
         let formattedOutput = `Extracted Markers:\n${extractedData.markers.join('\n')}`;
+        console.log("Extracted Data Sent:", formattedOutput); // Debugging log
+        browser.runtime.sendMessage({ type: "updateOutput", data: formattedOutput });
+
+    } else if (msg.type === "getOutfile") {
+        const extractedData = extractOutput(scanOutput);
+        let formattedOutput = `Extracted Outfile:\n${extractedData.outputs.join('\n')}`;
         console.log("Extracted Data Sent:", formattedOutput); // Debugging log
         browser.runtime.sendMessage({ type: "updateOutput", data: formattedOutput });
     }
