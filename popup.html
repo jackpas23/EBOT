@@ -5,6 +5,7 @@
   <title>BBOT Runner</title>
 </head>
 <body>
+  
   <h1>BBOT Scan &#128049</h1>
   <h3>I am from the government I am here to help</h3>
   <h2>Scanned Targets</h2>
@@ -12,23 +13,24 @@
 
   <label>Target:</label>
   <select id="targetInput">
-    <option>Loading....</option>
-  </select><br>
-  
-  <label>Allow Deadly</label>
-  <select id="deadly">
-    <option value="--allow-deadly">YES</option>
-    <option value="+">NO</option>
-  </select><br>
-  <label for="burpsuite"> You want Burpproxy?</label>
+    <option>Loading....</option></select><br>
+
+  <!----checkBoxes---->
+  <label for="deadly"> Allow Deadly?</label>
+  <input type="checkbox" id="deadly" name="deadly"><br>
+  <label for="burpsuite"> You want Burp-Proxy?</label>
   <input type="checkbox" id="burpsuite" name="burpsuite"><br>
   <label for="viewPreset"> View Preset?</label>
   <input type="checkbox" id="viewPreset" name="viewPreset"><br>
   <label for="strictScope"> strictScope?</label>
   <input type="checkbox" id="strictScope" name="strictScope"><br>
+  <!----checkBoxes---->
+  
+
+  <!----scanType Selection---->
   <label>Scan Type:</label>
   <select id="scanSelect">
-    <option value="baddns-thorough">BAD DNS Thorough</option>
+    <option value="baddns-intense">BAD DNS Thorough</option>
     <option value="cloud-enum">Cloud Enumeration</option>
     <option value="code-enum">Code Enumeration</option>
     <option value="dirbust-heavy">Directory Brute-force (Heavy)</option>
@@ -39,11 +41,15 @@
     <option value="kitchen-sink">Kitchen Sink (All Modules)</option>
     <option value="paramminer">Parameter Brute-force</option>
     <option value="spider">Web Spider</option>
+    <option value="spider-intense">Web Spider+</option>
     <option value="subdomain-enum">Subdomain Enumeration</option>
     <option value="web-basic">Basic Web Scan</option>
     <option value="web-screenshots">Web Screenshot Capture</option>
-    <option value="web-thorough">Thorough Web Scan</option>
-  </select><br>
+    <option value="web-thorough">Thorough Web Scan</option></select><br>
+  <!----scanType Selection---->
+  
+
+  <!----eventType Selection---->
   <label>Event Type:</label>
   <select id="eventTypeSelect">
     <option value="*" selected>All Events (*)</option>   
@@ -78,16 +84,22 @@
     <option value="VULNERABILITY">Vulnerability</option>
     <option value="WAF">Web Application Firewall (WAF)</option>
     <option value="WEBSCREENSHOT">Web Screenshot</option>
-    <option value="WEB_PARAMETER">Web Parameter</option>
-  </select><br>
-  <label>Module Dependencies</label>
+    <option value="WEB_PARAMETER">Web Parameter</option></select><br>
+  <!----eventType Selection---->
+  
+  <!----moduleInstall Selection---->
+    <label>Module Dependencies</label>
   <select id="modDeps">
     <option value="--ignore-failed-deps" selected>Ignore Failed Deps</option>
     <option value="--no-deps">Don't install deps.</option>
     <option value="--forced-deps">Force</option>
     <option value="--retry-deps">retry deps</option>
-    <option value="--install-all-deps">install all</option>
-  </select><br>
+    <option value="--install-all-deps">install all</option></select><br>
+  <!----moduleInstall Selection---->
+
+
+
+  <!----flagType Selection---->
   <label for="flagSelect">Flag Type:</label>
   <select id="flagSelect">
     <option value="" selected>N/A</option>
@@ -112,25 +124,33 @@
     <option value="web-screenshots">Web Screenshots</option>
     <option value="slow">Slow</option>
     <option value="deadly">Deadly</option>
-    <option value="iis-shortnames">IIS Short Names</option>
-  </select><br>
+    <option value="iis-shortnames">IIS Short Names</option></select><br>
+  <!----flagType Selection---->
+
+  <!----BUTTONS---->
   <button id="runScanBtn">Run Scan</button>
   <button id="clearOutputBtn">Clear Output</button>
   <button id="clearHostsBtn">Clear Targets</button>
   <button id="getUrlsBtn">Extract Stream URLS</button>
   <button id="getOutputBtn">Stream Output</button>
-  <button id="getHostsBtn">Scanned Targets</button>
-  <hr>
+  <button id="getHostsBtn">Scanned Targets</button><hr>
+  <button id="getSubdomainsBtn">Read Selected Out File</button>
+  <button id="getOutfileBtn">Populate Outfiles *DEBUGGING*</button>
+  <!----BUTTONS---->
+
+
+  <!----OUTPUT STUFF(IN DEV)---->
   <label for="getSubdomains">Available Output Files:</label>
   <select id="getSubdomains">
     <option value="/home/flaxo/.bbot/scans/moist_craig/subdomains.txt">test path</option>
-    <option value="/home/flaxo/.bbot/scans/zesty_alexis/output.txt">test 2</option>
-  </select><br>
-  <button id="getSubdomainsBtn">Read Selected Out File</button>
-  <button id="getOutfileBtn">Populate Outfiles *DEBUGGING*</button>
+    <option value="/home/flaxo/.bbot/scans/zesty_alexis/output.txt">test 2</option></select><br>
+  <!----OUTPUT STUFF(IN DEV)---->
+  
+
+  <!----OUTPUT WINDOW---->
   <h2>Scan Output</h2>
   <pre id="outputArea" style="white-space: pre-wrap;font-weight: 200; color: green;max-height: 300px; overflow-y: auto;"></pre>
-  
+  <!----OUTPUT WINDOW---->
    
   <script src="popup.js"></script>
 </body>

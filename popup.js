@@ -1,4 +1,6 @@
 document.addEventListener("DOMContentLoaded", async () => {
+    
+    //Buttons
     const runScanBtn = document.getElementById("runScanBtn");
     const clearOutputBtn = document.getElementById("clearOutputBtn");
     const getHostsBtn = document.getElementById("getHostsBtn");
@@ -6,30 +8,44 @@ document.addEventListener("DOMContentLoaded", async () => {
     const clearOutfileBtn = document.getElementById("clearOutfileBtn");
     const clearHostsBtn = document.getElementById("clearHostsBtn");
     const getOutputBtn = document.getElementById("getOutputBtn");
-    const targetDropdown = document.getElementById("targetInput"); // Now a <select>
     const getUrlsBtn = document.getElementById("getUrlsBtn");
+    const getSubdomainsBtn = document.getElementById("getSubdomainsBtn");
+    
+
+    //CheckBoxes
+    const deadlySelect = document.getElementById("deadly");
+    const viewPreset = document.getElementById("viewPreset");
+    const burpsuite = document.getElementById("burpsuite");
+    const strictScope = document.getElementById("strictScope");
+    
+
+    //Scan DropDowns
+    const targetDropdown = document.getElementById("targetInput");
     const scanSelect = document.getElementById("scanSelect");
     const eventTypeSelect = document.getElementById("eventTypeSelect");
-    const deadlySelect = document.getElementById("deadly");
-    const moduleSelect = document.getElementById("modDeps");
     const flagSelect = document.getElementById("flagSelect");
+    const moduleSelect = document.getElementById("modDeps");
+
+    //Output Areas
     const outputArea = document.getElementById("outputArea");
     const hostsArea = document.getElementById("hostsArea");
-    const burpsuite = document.getElementById("burpsuite");
-    const viewPreset = document.getElementById("viewPreset");
-    const strictScope = document.getElementById("strictScope");
-    const getSubdomainsBtn = document.getElementById("getSubdomainsBtn");
+
+    //FileParser
     const getSubdomainsDropdown = document.getElementById("getSubdomains");
+
+    //Dynamically Updated Fields
     browser.runtime.sendMessage({ type: "getOutput" });
     browser.runtime.sendMessage({ type: "getOutfile" });
     browser.runtime.sendMessage({ type: "getHosts" });
+    
+    
     function updateDropdown(filePaths) {
         if (!filePaths || filePaths.length === 0) {
             console.warn("No outfiles found.");
             return;
         }
 
-        // ✅ **Preserve first static option (test path)**
+        
         const staticOptions = `
             <option value="/home/flaxo/.bbot/scans/moist_craig/subdomains.txt">test path*DEBUGGING*</option>
         `;
@@ -95,7 +111,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         outputArea.textContent += "SCAN RUNNING:\n";
         const targetVal = targetDropdown.value.trim(); // Get selected domain
         const scanVal = scanSelect.value;
-        const deadlyVal = deadlySelect.value.trim();
+        const deadlyVal = deadlySelect.checked;
         const burpVal = burpsuite.checked;
 
         const eventTypeVal = eventTypeSelect.value.trim() || "*";

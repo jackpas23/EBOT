@@ -36,7 +36,7 @@ def read_message():
 # ✅ **Run BBOT Scan and Stream Output**
 def run_scan(target, scantype, deadly, eventtype, moddep, flagtype, burp, viewtype, scope):
     """Run BBOT and stream output in real-time to Firefox."""
-    cmd = ["bbot", "-t", target, "-y", "-p", scantype, deadly, "--event-types", eventtype, moddep, "-v"]
+    cmd = ["bbot", "-t", target, "-y", "-p", scantype, "--event-types", eventtype, moddep, "-v"]
 
     if flagtype:
         cmd.extend(["-f", flagtype])
@@ -48,6 +48,8 @@ def run_scan(target, scantype, deadly, eventtype, moddep, flagtype, burp, viewty
         cmd.append("--current-preset")
     if scope:
         cmd.append("--strict-scope")
+    if deadly:
+        cmd.append("--allow-deadly")
 
     try:
         with open("output.txt", "w", encoding="utf-8") as output_file:
@@ -55,7 +57,7 @@ def run_scan(target, scantype, deadly, eventtype, moddep, flagtype, burp, viewty
                 cmd, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, text=True, bufsize=1, universal_newlines=True
             )
 
-            # ✅ **Stream Output to Firefox**
+            
             for line in process.stdout:
                 line = line.strip()
                 if line:

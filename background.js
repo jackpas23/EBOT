@@ -58,7 +58,7 @@ function fetchSubdomains(filePath) {
                     reject("Failed to load subdomains.");
                 } else {
                     console.log("Subdomains:", response.data);
-                    subdomains = response.data; // Store subdomains
+                    subdomains = response.data;
                     resolve(response.data);
                 }
             })
