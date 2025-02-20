@@ -7,7 +7,6 @@ document.addEventListener("DOMContentLoaded", async () => {
     const clearTargetsBtn = document.getElementById("clearTargetsBtn");
     const streamOutputBtn = document.getElementById("streamOutputBtn");
     const extractStreamUrlsBtn = document.getElementById("extractStreamUrlsBtn");
-    const getSubdomainsBtn = document.getElementById("getSubdomainsBtn");
     
 
     //CheckBoxes
