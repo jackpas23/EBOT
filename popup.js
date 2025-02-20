@@ -3,12 +3,11 @@ document.addEventListener("DOMContentLoaded", async () => {
     //Buttons
     const runScanBtn = document.getElementById("runScanBtn");
     const clearOutputBtn = document.getElementById("clearOutputBtn");
-    const getHostsBtn = document.getElementById("getHostsBtn");
     const getOutfileBtn = document.getElementById("getOutfileBtn");
     const clearOutfileBtn = document.getElementById("clearOutfileBtn");
-    const clearHostsBtn = document.getElementById("clearHostsBtn");
-    const getOutputBtn = document.getElementById("getOutputBtn");
-    const getUrlsBtn = document.getElementById("getUrlsBtn");
+    const clearTargetsBtn = document.getElementById("clearTargetsBtn");
+    const streamOutputBtn = document.getElementById("streamOutputBtn");
+    const extractStreamUrlsBtn = document.getElementById("extractStreamUrlsBtn");
     const getSubdomainsBtn = document.getElementById("getSubdomainsBtn");
     
 
@@ -26,7 +25,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     const flagSelect = document.getElementById("flagSelect");
     const moduleSelect = document.getElementById("modDeps");
 
-    //Output Areas
+    //Output Text Areas
     const outputArea = document.getElementById("outputArea");
     const hostsArea = document.getElementById("hostsArea");
 
@@ -44,27 +43,23 @@ document.addEventListener("DOMContentLoaded", async () => {
             console.warn("No outfiles found.");
             return;
         }
-
-        
-        const staticOptions = `
-            <option value="/home/flaxo/.bbot/scans/moist_craig/subdomains.txt">test path*DEBUGGING*</option>
-        `;
-
-        // ✅ **Generate new options**
         let newOptions = filePaths.map(filePath => {
-            let fileName = filePath.split('/').pop(); // Extract only the filename
-            return `<option value="${filePath}">${fileName}</option>`;
+            let parts= filePath.split('/');
+            let fileName = parts.pop();
+            let scanName = parts.pop();
+            let result = `${scanName}/${fileName}`;
+            return `<option value="${filePath}">${result}</option>`;
         }).join("");
 
-        // ✅ **Update the dropdown**
-        getSubdomainsDropdown.innerHTML = staticOptions + newOptions;
+        
+        getSubdomainsDropdown.innerHTML = newOptions;
         console.log("Dropdown updated successfully!");
     }
 
-    // Function to fetch recent domains
+
     async function fetchRecentDomains() {
         try {
-            const historyItems = await browser.history.search({ text: "", maxResults: 15 }); // Get last 10 history items
+            const historyItems = await browser.history.search({ text: "", maxResults: 15 }); // Get 15 history items
             let uniqueDomains = new Set();
 
             historyItems.forEach(item => {
@@ -77,7 +72,7 @@ document.addEventListener("DOMContentLoaded", async () => {
             });
 
             // Populate the dropdown with domains
-            targetDropdown.innerHTML = ""; // Clear previous options
+            targetDropdown.innerHTML = "";
             uniqueDomains.forEach(domain => {
                 let option = document.createElement("option");
                 option.value = domain;
@@ -113,7 +108,6 @@ document.addEventListener("DOMContentLoaded", async () => {
         const scanVal = scanSelect.value;
         const deadlyVal = deadlySelect.checked;
         const burpVal = burpsuite.checked;
-
         const eventTypeVal = eventTypeSelect.value.trim() || "*";
         const modDepsVal = moduleSelect.value.trim();
         const flagVal = flagSelect.value.trim();
@@ -140,17 +134,14 @@ document.addEventListener("DOMContentLoaded", async () => {
         });
     });
 
-    // When user clicks "Clear Output"
+    
     clearOutputBtn.addEventListener("click", () => {
         browser.runtime.sendMessage({ type: "clearOutput" });
     });
-    getHostsBtn.addEventListener("click", () => {
-        browser.runtime.sendMessage({ type: "getHosts" });
-    });
-    getUrlsBtn.addEventListener("click", () => {
+    extractStreamUrlsBtn.addEventListener("click", () => {
         browser.runtime.sendMessage({ type: "getURLS" });
     });
-    getOutputBtn.addEventListener("click", () => {
+    streamOutputBtn.addEventListener("click", () => {
         browser.runtime.sendMessage({ type: "getOutput" });
     });
     getOutfileBtn.addEventListener("click", () => {
@@ -158,16 +149,13 @@ document.addEventListener("DOMContentLoaded", async () => {
     });
     browser.runtime.onMessage.addListener((message) => {
         if (message.type === "updateOutfileList") {
-            updateDropdown(message.data);
-        }
+            updateDropdown(message.data);}
     });
     getSubdomainsBtn.addEventListener("click", () => {
         const selectedPath = getSubdomains.value;
         browser.runtime.sendMessage({ type: "getSubdomains" , subdomains: selectedPath });
     });
-
-    // When user clicks "Clear Hosts"
-    clearHostsBtn.addEventListener("click", () => {
+    clearTargetsBtn.addEventListener("click", () => {
         browser.runtime.sendMessage({ type: "clearHosts" });
     });
     clearOutfileBtn.addEventListener("click", () => {

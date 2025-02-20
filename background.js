@@ -1,11 +1,14 @@
 // background.js
+
+
 const URLs = /\b(?:[a-zA-Z0-9-]+\.)+[a-zA-Z]{2,}\b/g;
 const logOutputs = /\/home\/[^\/]+\/\.bbot\/scans\/[^\/]+\/\S+/g;
-
 let port = null;
 let scanOutput = ""; // Store all BBOT output persistently while Firefox is running
 let subdomains ="";
 let hosts = new Set();
+
+
 function connectNative() {
     port = browser.runtime.connectNative("bbot_host");
 
@@ -39,7 +42,8 @@ function extractInfo(scanOutput) {
 function extractOutput(scanOutput) {
     console.log("Raw Scan Output:", scanOutput); 
     
-    const outputs = scanOutput.match(logOutputs) || [];
+    const outputs = (scanOutput.match(logOutputs) || []).filter(file => !file.includes("wordcloud.tsv"));
+
     const uniqueOutputs = [...new Set(outputs)];
 
     
@@ -94,6 +98,8 @@ browser.runtime.onMessage.addListener((msg) => {
             viewtype: msg.viewtype,
             scope: msg.scope
         });
+
+
     } else if (msg.type === "getOutput") {
         browser.runtime.sendMessage({ type: "updateOutput", data: scanOutput });
     } else if (msg.type === "getHosts") {
