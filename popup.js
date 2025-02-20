@@ -3,7 +3,6 @@ document.addEventListener("DOMContentLoaded", async () => {
     //Buttons
     const runScanBtn = document.getElementById("runScanBtn");
     const clearOutputBtn = document.getElementById("clearOutputBtn");
-    const getOutfileBtn = document.getElementById("getOutfileBtn");
     const clearOutfileBtn = document.getElementById("clearOutfileBtn");
     const clearTargetsBtn = document.getElementById("clearTargetsBtn");
     const streamOutputBtn = document.getElementById("streamOutputBtn");
@@ -144,14 +143,11 @@ document.addEventListener("DOMContentLoaded", async () => {
     streamOutputBtn.addEventListener("click", () => {
         browser.runtime.sendMessage({ type: "getOutput" });
     });
-    getOutfileBtn.addEventListener("click", () => {
-        browser.runtime.sendMessage({ type: "getOutfile" });
-    });
     browser.runtime.onMessage.addListener((message) => {
         if (message.type === "updateOutfileList") {
             updateDropdown(message.data);}
     });
-    getSubdomainsBtn.addEventListener("click", () => {
+    getSubdomains.addEventListener("click", () => {
         const selectedPath = getSubdomains.value;
         browser.runtime.sendMessage({ type: "getSubdomains" , subdomains: selectedPath });
     });
