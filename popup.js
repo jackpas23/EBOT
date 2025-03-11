@@ -2,6 +2,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     
     //Buttons
     const runScanBtn = document.getElementById("runScanBtn");
+    const deployBbotBtn = document.getElementById("deployBbotBtn");
     const clearOutputBtn = document.getElementById("clearOutputBtn");
     const clearOutfileBtn = document.getElementById("clearOutfileBtn");
     const clearTargetsBtn = document.getElementById("clearTargetsBtn");
@@ -127,6 +128,10 @@ document.addEventListener("DOMContentLoaded", async () => {
             viewtype: viewPresetVal,
             scope: scopeVal
         });
+        setTimeout(() => {
+            outputArea.scrollTop = outputArea.scrollHeight; 
+            outputArea.scrollIntoView({ behavior: "smooth", block: "nearest" });
+        }, 1500);
     });
 
     
@@ -135,9 +140,25 @@ document.addEventListener("DOMContentLoaded", async () => {
     });
     extractStreamUrlsBtn.addEventListener("click", () => {
         browser.runtime.sendMessage({ type: "getURLS" });
+        setTimeout(() => {
+            outputArea.scrollTop = outputArea.scrollHeight; 
+            outputArea.scrollIntoView({ behavior: "smooth", block: "nearest" });
+        }, 20);
+    });
+    deployBbotBtn.addEventListener("click", () => {
+        browser.runtime.sendMessage({ type: "deployBbot" });
+        setTimeout(() => {
+            outputArea.scrollTop = outputArea.scrollHeight; 
+            outputArea.scrollIntoView({ behavior: "smooth", block: "nearest" });
+        }, 20);
     });
     streamOutputBtn.addEventListener("click", () => {
-        browser.runtime.sendMessage({ type: "getOutput" });
+        
+        setTimeout(() => {
+            outputArea.scrollTop = outputArea.scrollHeight; 
+            outputArea.scrollIntoView({ behavior: "smooth", block: "nearest" });
+        }, 20);
+        
     });
     browser.runtime.onMessage.addListener((message) => {
         if (message.type === "updateOutfileList") {
@@ -146,6 +167,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     getSubdomains.addEventListener("change", () => {
         const selectedPath = getSubdomains.value;
         browser.runtime.sendMessage({ type: "getSubdomains" , subdomains: selectedPath });
+        outputArea.scrollIntoView({ behavior: "smooth", block: "nearest" });
     });
     clearTargetsBtn.addEventListener("click", () => {
         browser.runtime.sendMessage({ type: "clearHosts" });

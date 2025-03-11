@@ -126,13 +126,14 @@
             transform: scale(1.5); /* Slightly enlarges checkboxes for better visibility */
             margin: auto; /* Centers checkbox inside label */
         }
-
+        
     </style>
 </head>
 <body>
     
     <h1>BBOT Scan <span>🐱</span></h1>
     <h3>I am from the government I am here to help</h3>
+    <button id="deployBbotBtn">deployBbot</button>
     <h2>Scanned Targets</h2>
     <pre id="hostsArea"></pre>
 
@@ -230,7 +231,10 @@
     <select id="getSubdomains">
         <option>undefined / No outfiles found</option>
     </select>
-    <h2>Scan Output</h2>
+    
+    
+    
+    <h2>Terminal</h2>
     <pre id="outputArea"></pre>
 
     <script src="popup.js"></script>
