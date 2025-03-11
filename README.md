@@ -1,4 +1,4 @@
-#### BBOT Firefox Plugin
+# BBOT Firefox Plugin
 
 ### Overview
 
