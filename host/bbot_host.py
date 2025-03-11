@@ -33,7 +33,7 @@ def read_message():
     message = sys.stdin.buffer.read(message_length).decode("utf-8")
     return json.loads(message)
 
-# ✅ **Run BBOT Scan and Stream Output**
+
 def run_scan(target, scantype, deadly, eventtype, moddep, flagtype, burp, viewtype, scope):
     """Run BBOT and stream output in real-time to Firefox."""
     cmd = ["bbot", "-t", target, "-y", "-p", scantype, "--event-types", eventtype, moddep, "-v"]
@@ -49,13 +49,15 @@ def run_scan(target, scantype, deadly, eventtype, moddep, flagtype, burp, viewty
     if scope:
         cmd.append("--strict-scope")
     if deadly:
-        cmd.append("--allow-deadly")
+        cmd.append("--allow-deadly"),
+        cmd.insert(0, "pkexec")
 
     try:
         with open("output.txt", "w", encoding="utf-8") as output_file:
             process = subprocess.Popen(
-                cmd, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, text=True, bufsize=1, universal_newlines=True
+                cmd, stdout=subprocess.PIPE, stdin=subprocess.PIPE, stderr=subprocess.STDOUT, text=True, bufsize=1, universal_newlines=True
             )
+            
 
             
             for line in process.stdout:
