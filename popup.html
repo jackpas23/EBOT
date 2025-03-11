@@ -1,154 +1,207 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <meta charset="utf-8">
-  <title>BBOT Runner</title>
+    <meta charset="utf-8">
+    <title>BBOT Runner</title>
+    <style>
+        /* General Styles */
+        body {
+            background-color: #1e1e1e;
+            color: white;
+            font-family: Arial, sans-serif;
+            margin: 10px;
+            width: 350px; /* Keeps it compact */
+        }
+
+        h1 {
+            color: rgb(245, 95, 14);
+            font-size: 20px;
+            display: flex;
+            align-items: center;
+        }
+
+        h1 span {
+            margin-left: 5px;
+        }
+
+        h2 {
+            color: rgb(247, 66, 42);
+            font-size: 16px;
+        }
+
+        label {
+            color: rgb(249, 251, 250);
+            font-weight: bold;
+            margin-bottom: 5px;
+            display: block;
+        }
+
+        /* Dropdowns and Inputs */
+        select, input[type="checkbox"] {
+            margin-top: 3px;
+            margin-bottom: 10px;
+            padding: 5px;
+            font-size: 14px;
+            background-color: #2c2c2c;
+            color: white;
+            border: 1px solid #444;
+            border-radius: 4px;
+            width: 100%;
+        }
+
+        /* Buttons */
+        .button-container {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 5px;
+            margin-top: 10px;
+        }
+
+        button {
+            background-color: rgb(245, 95, 14);
+            color: white;
+            border: none;
+            padding: 8px;
+            cursor: pointer;
+            font-size: 14px;
+            border-radius: 4px;
+            text-align: center;
+        }
+
+        button:hover {
+            background-color: rgb(247, 66, 42);
+        }
+
+        /* Grid Layout */
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(2, auto); /* Columns auto-size */
+            grid-template-rows: repeat(2, auto); /* Rows auto-size */
+            gap: 5px; /* Small gap between grid items */
+            align-items: start; /* Align items to the top */
+            justify-content: start; /* Align grid to the left */
+        }
+
+        /* Scan Output Box */
+        #outputArea {
+            white-space: pre-wrap;
+            font-family: monospace;
+            font-weight: 600;
+            color: #00ff00;
+            background-color: #121212;
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #444;
+            max-height: 200px;
+            overflow-y: auto;
+            font-size: 12px;
+        }
+
+        /* Targets List */
+        pre#hostsArea {
+            white-space: pre-wrap;
+            max-height: 150px;
+            overflow-y: auto;
+            font-weight: 600;
+            color: orange;
+            font-size: 13px;
+        }
+        .checkbox-container {
+    display: grid;
+    grid-template-columns: repeat(2, auto); /* Two columns */
+    gap: 5px; /* Small spacing */
+    text-align: left; /* Aligns labels */
+}
+
+        .checkbox-container label {
+            display: flex;
+            padding-right:10px;
+            clear:left;
+            align-items: center;  /* Aligns checkbox and text */
+            justify-content: space-between; /* Keeps text left, checkbox right */
+            gap: 10px; /* Adds spacing between checkbox and text */
+        }
+
+        .checkbox-container input[type="checkbox"] {
+            transform: scale(1.5); /* Slightly enlarges checkboxes for better visibility */
+            margin: auto; /* Centers checkbox inside label */
+        }
+
+    </style>
 </head>
 <body>
-  
-  <h1>BBOT Scan &#128049</h1>
-  <h3>I am from the government I am here to help</h3>
-  <h2>Scanned Targets</h2>
-  <pre id="hostsArea" style="white-space: pre-wrap; max-height: 400px; overflow-y: auto;"></pre>
+    
+    <h1>BBOT Scan <span>🐱</span></h1>
+    <h3>I am from the government I am here to help</h3>
+    <h2>Scanned Targets</h2>
+    <pre id="hostsArea"></pre>
 
-  <label>Target:</label>
-  <select id="targetInput">
-    <option>Loading....</option></select><br>
+    <label>Target:</label>
+    <select id="targetInput">
+        <option>Loading...</option>
+    </select>
 
-  <!----checkBoxes---->
-  <label for="deadly"> Allow Deadly?</label>
-  <input type="checkbox" id="deadly" name="deadly"><br>
-  <label for="burpsuite"> You want Burp-Proxy?</label>
-  <input type="checkbox" id="burpsuite" name="burpsuite"><br>
-  <label for="viewPreset"> View Preset?</label>
-  <input type="checkbox" id="viewPreset" name="viewPreset"><br>
-  <label for="strictScope"> strictScope?</label>
-  <input type="checkbox" id="strictScope" name="strictScope"><br>
-  <!----checkBoxes---->
-  
+    <div class="checkbox-container">
+        <label><input type="checkbox" id="deadly"> Allow Deadly</label>
+        <label><input type="checkbox" id="burpsuite"> Use Burp-Proxy</label>
+        <label><input type="checkbox" id="viewPreset"> View Preset</label>
+        <label><input type="checkbox" id="strictScope"> Strict Scope</label>
+    </div><br>
 
-  <!----scanType Selection---->
-  <label>Scan Type:</label>
-  <select id="scanSelect">
-    <option value="baddns-intense">BAD DNS Thorough</option>
-    <option value="cloud-enum">Cloud Enumeration</option>
-    <option value="code-enum">Code Enumeration</option>
-    <option value="dirbust-heavy">Directory Brute-force (Heavy)</option>
-    <option value="dirbust-light">Directory Brute-force (Light)</option>
-    <option value="dotnet-audit">.NET/IIS Audit</option>
-    <option value="email-enum">Email Enumeration</option>
-    <option value="iis-shortnames">IIS Shortname Enumeration</option>
-    <option value="kitchen-sink">Kitchen Sink (All Modules)</option>
-    <option value="paramminer">Parameter Brute-force</option>
-    <option value="spider">Web Spider</option>
-    <option value="spider-intense">Web Spider+</option>
-    <option value="subdomain-enum">Subdomain Enumeration</option>
-    <option value="web-basic">Basic Web Scan</option>
-    <option value="web-screenshots">Web Screenshot Capture</option>
-    <option value="web-thorough">Thorough Web Scan</option></select><br>
-  <!----scanType Selection---->
-  
+    <label>Scan Type:</label>
+    <select id="scanSelect">
+        <option value="baddns-intense">BAD DNS Thorough</option>
+        <option value="cloud-enum">Cloud Enumeration</option>
+        <option value="code-enum">Code Enumeration</option>
+        <option value="dirbust-heavy">Directory Brute-force (Heavy)</option>
+        <option value="dirbust-light">Directory Brute-force (Light)</option>
+        <option value="subdomain-enum">Subdomain Enumeration</option>
+        <option value="web-basic">Basic Web Scan</option>
+    </select>
 
-  <!----eventType Selection---->
-  <label>Event Type:</label>
-  <select id="eventTypeSelect">
-    <option value="*" selected>All Events (*)</option>   
-    <option value="ASN">ASN</option>
-    <option value="AZURE_TENANT">Azure Tenant</option>
-    <option value="CODE_REPOSITORY">Code Repository</option>
-    <option value="DNS_NAME">DNS Name</option>
-    <option value="DNS_NAME_UNRESOLVED">Unresolved DNS Name</option>
-    <option value="EMAIL_ADDRESS">Email Address</option>
-    <option value="FILESYSTEM">Filesystem</option>
-    <option value="FINDING">Finding</option>
-    <option value="GEOLOCATION">Geolocation</option>
-    <option value="HASHED_PASSWORD">Hashed Password</option>
-    <option value="HTTP_RESPONSE">HTTP Response</option>
-    <option value="IP_ADDRESS">IP Address</option>
-    <option value="IP_RANGE">IP Range</option>
-    <option value="MOBILE_APP">Mobile App</option>
-    <option value="OPEN_TCP_PORT">Open TCP Port</option>
-    <option value="ORG_STUB">Organization Stub</option>
-    <option value="PASSWORD">Password</option>
-    <option value="PROTOCOL">Protocol</option>
-    <option value="RAW_DNS_RECORD">Raw DNS Record</option>
-    <option value="RAW_TEXT">Raw Text</option>
-    <option value="SOCIAL">Social</option>
-    <option value="STORAGE_BUCKET">Storage Bucket</option>
-    <option value="TECHNOLOGY">Technology</option>
-    <option value="URL">URL</option>
-    <option value="URL_HINT">URL Hint</option>
-    <option value="URL_UNVERIFIED">Unverified URL</option>
-    <option value="USERNAME">Username</option>
-    <option value="VHOST">Virtual Host (VHOST)</option>
-    <option value="VULNERABILITY">Vulnerability</option>
-    <option value="WAF">Web Application Firewall (WAF)</option>
-    <option value="WEBSCREENSHOT">Web Screenshot</option>
-    <option value="WEB_PARAMETER">Web Parameter</option></select><br>
-  <!----eventType Selection---->
-  
-  <!----moduleInstall Selection---->
-    <label>Module Dependencies</label>
-  <select id="modDeps">
-    <option value="--ignore-failed-deps" selected>Ignore Failed Deps</option>
-    <option value="--no-deps">Don't install deps.</option>
-    <option value="--forced-deps">Force</option>
-    <option value="--retry-deps">retry deps</option>
-    <option value="--install-all-deps">install all</option></select><br>
-  <!----moduleInstall Selection---->
+    <label>Event Type:</label>
+    <select id="eventTypeSelect">
+        <option value="*">All Events (*)</option>
+        <option value="ASN">ASN</option>
+        <option value="EMAIL_ADDRESS">Email Address</option>
+        <option value="IP_ADDRESS">IP Address</option>
+        <option value="URL">URL</option>
+    </select>
 
+    <label>Module Dependencies:</label>
+    <select id="modDeps">
+        <option value="--ignore-failed-deps">Ignore Failed Deps</option>
+        <option value="--no-deps">Don't install deps</option>
+        <option value="--install-all-deps">Install all</option>
+    </select>
 
+    <label>Flag Type:</label>
+    <select id="flagSelect">
+        <option value="" selected>N/A</option>
+        <option value="web-thorough">Web Thorough</option>
+        <option value="portscan">Port Scan</option>
+        <option value="subdomain-enum">Subdomain Enumeration</option>
+    </select>
 
-  <!----flagType Selection---->
-  <label for="flagSelect">Flag Type:</label>
-  <select id="flagSelect">
-    <option value="" selected>N/A</option>
-    <option value="web-thorough">Web Thorough</option>
-    <option value="portscan">Port Scan</option>
-    <option value="service-enum">Service Enumeration</option>
-    <option value="passive">Passive</option>
-    <option value="subdomain-enum">Subdomain Enumeration</option>
-    <option value="web-basic">Web Basic</option>
-    <option value="code-enum">Code Enumeration</option>
-    <option value="social-enum">Social Enumeration</option>
-    <option value="safe">Safe</option>
-    <option value="cloud-enum">Cloud Enumeration</option>
-    <option value="report">Report</option>
-    <option value="baddns">Bad DNSs</option>
-    <option value="web-paramminer">Web Parameter Miner</option>
-    <option value="subdomain-hijack">Subdomain Hijack</option>
-    <option value="active">Active</option>
-    <option value="aggressive">Aggressive</option>
-    <option value="email-enum">Email Enumeration</option>
-    <option value="affiliates">Affiliates</option>
-    <option value="web-screenshots">Web Screenshots</option>
-    <option value="slow">Slow</option>
-    <option value="deadly">Deadly</option>
-    <option value="iis-shortnames">IIS Short Names</option></select><br>
-  <!----flagType Selection---->
+    <div class="button-container">
+        <button id="runScanBtn">Run Scan</button>
+        <button id="clearOutputBtn">Clear Output</button>
+        <button id="clearTargetsBtn">Clear Targets</button>
+        <button id="extractStreamUrlsBtn">Extract Stream URLs</button>
+    </div>
 
-  <!----BUTTONS---->
-  <button id="runScanBtn">Run Scan</button>
-  <button id="clearOutputBtn">Clear Output</button>
-  <button id="clearTargetsBtn">Clear Scanned Targets</button>
-  <button id="extractStreamUrlsBtn">Extract Stream URLS (DEBUG)</button>
-  <button id="streamOutputBtn">Stream Output</button><br>
-  <button id="refreshButton">Refresh Page</button>
-  <!----BUTTONS---->
+    <div class="button-container">
+        <button id="streamOutputBtn">Stream Output</button>
+        <button id="refreshButton">Refresh Page</button>
+    </div><br>
 
+    <label for="getSubdomains">Available Output Files:</label>
+    <select id="getSubdomains">
+        <option>undefined / No outfiles found</option>
+    </select>
+    <h2>Scan Output</h2>
+    <pre id="outputArea"></pre>
 
-  <!----OUTPUT STUFF(IN DEV)---->
-  <label for="getSubdomains">Available Output Files:</label>
-  <select id="getSubdomains">
-  </select><br>
-  <!----OUTPUT STUFF(IN DEV)---->
-  
-
-  <!----OUTPUT WINDOW---->
-  <h2>Scan Output</h2>
-  <pre id="outputArea" style="white-space: pre-wrap;font-weight: 200; color: green;max-height: 300px; overflow-y: auto;"></pre>
-  <!----OUTPUT WINDOW---->
-   
-  <script src="popup.js"></script>
+    <script src="popup.js"></script>
 </body>
 </html>
