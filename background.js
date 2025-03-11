@@ -85,7 +85,7 @@ browser.runtime.onMessage.addListener((msg) => {
     if (!port) {
         connectNative();
     }
-
+    
 
     if (msg.type === "runScan") {
         // Add target to hosts list
@@ -110,6 +110,8 @@ browser.runtime.onMessage.addListener((msg) => {
     } else if (msg.type === "getOutput") {
         stream = 1;
         browser.runtime.sendMessage({ type: "updateOutput", data: scanOutput });
+    } else if (msg.type === "killScan") {
+        port.postMessage({command: "killScan"});
     } else if (msg.type === "getHosts") {
         browser.runtime.sendMessage({ type: "updateHosts", data: Array.from(hosts).join('\n') }); // Send list of scanned hosts
     } else if (msg.type === "clearOutput") {

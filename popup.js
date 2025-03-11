@@ -20,7 +20,6 @@ document.addEventListener("DOMContentLoaded", async () => {
     const targetDropdown = document.getElementById("targetInput");
     const scanSelect = document.getElementById("scanSelect");
     const eventTypeSelect = document.getElementById("eventTypeSelect");
-    const flagSelect = document.getElementById("flagSelect");
     const moduleSelect = document.getElementById("modDeps");
 
     //Output Text Areas
@@ -95,20 +94,19 @@ document.addEventListener("DOMContentLoaded", async () => {
             outputArea.textContent = message.data; // Update the output area
             outputArea.scrollTop = outputArea.scrollHeight; // Auto-scroll to bottom
         } else if (message.type === "updateHosts") {
-            hostsArea.textContent = message.data; // Update scanned hosts list
+            hostsArea.textContent = message.data;
         }
     });
 
     // When user clicks "Run Scan"
     runScanBtn.addEventListener("click", () => {
         outputArea.textContent += "SCAN RUNNING:\n";
-        const targetVal = targetDropdown.value.trim(); // Get selected domain
+        const targetVal = targetDropdown.value.trim();
         const scanVal = scanSelect.value;
         const deadlyVal = deadlySelect.checked;
         const burpVal = burpsuite.checked;
         const eventTypeVal = eventTypeSelect.value.trim() || "*";
         const modDepsVal = moduleSelect.value.trim();
-        const flagVal = flagSelect.value.trim();
         const viewPresetVal = viewPreset.checked;
         const scopeVal = strictScope.checked;
 
@@ -125,7 +123,6 @@ document.addEventListener("DOMContentLoaded", async () => {
             deadly: deadlyVal,
             eventType: eventTypeVal,
             moddep: modDepsVal,
-            flagType: flagVal,
             burp: burpVal,
             viewtype: viewPresetVal,
             scope: scopeVal
