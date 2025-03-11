@@ -1,8 +1,5 @@
 ##In firefox extensions add the manfiest, if snap requires different path
 
-
-
-
 if test -e "$HOME/.mozilla/native-messaging-hosts"; then
 
   echo "Path exists"
@@ -14,7 +11,7 @@ else
 
 fi
 
-sed -i "s|\USER|$(whoami)|g" ./host/bbot_host.json
+sed -i "s|\USER|$(pwd)|g" ./host/bbot_host.json
 
 
 cp ./host/bbot_host.json ~/.mozilla/native-messaging-hosts
