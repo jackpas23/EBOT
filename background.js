@@ -1,13 +1,14 @@
 // background.js
 
-
 const URLs = /\b(?:[a-zA-Z0-9-]+\.)+[a-zA-Z]{2,}\b/g;
 const logOutputs = /\/home\/[^\/]+\/\.bbot\/scans\/[^\/]+\/\S+/g;
 let port = null;
 let scanOutput = ""; // Store all BBOT output persistently while Firefox is running
 let subdomains ="";
 let hosts = new Set();
-
+let stream = 0;
+let target = "";
+let refresh = 0;
 
 function connectNative() {
     port = browser.runtime.connectNative("bbot_host");
@@ -15,7 +16,12 @@ function connectNative() {
     port.onMessage.addListener((message) => {
         if (message.type === "scanResult") {
             scanOutput += message.data + "\n"; // Append scan results
-            browser.runtime.sendMessage({ type: "updateOutput", data: scanOutput }); // Send updated output to popup
+            if (stream == 1) {
+                browser.runtime.sendMessage({ type: "updateOutput", data: scanOutput }); // Send updated output to popup
+            }
+            else {
+                console.log("streaming paused")
+            }
         } else if (message.type === "error") {
             scanOutput += `[ERROR] ${message.data}\n`;
             browser.runtime.sendMessage({ type: "updateOutput", data: scanOutput });
@@ -82,7 +88,6 @@ browser.runtime.onMessage.addListener((msg) => {
     if (msg.type === "runScan") {
         // Add target to hosts list
         hosts.add(msg.target);
-
         // Ensure eventType defaults to "*"
         const eventType = msg.eventType ? msg.eventType : "*";
 
@@ -101,6 +106,7 @@ browser.runtime.onMessage.addListener((msg) => {
 
 
     } else if (msg.type === "getOutput") {
+        stream = 1;
         browser.runtime.sendMessage({ type: "updateOutput", data: scanOutput });
     } else if (msg.type === "getHosts") {
         browser.runtime.sendMessage({ type: "updateHosts", data: Array.from(hosts).join('\n') }); // Send list of scanned hosts
@@ -109,9 +115,10 @@ browser.runtime.onMessage.addListener((msg) => {
         browser.runtime.sendMessage({ type: "updateOutput", data: scanOutput }); // Notify popup
     } else if (msg.type === "clearHosts") {
         hosts.clear(); // Clear stored hosts
-        browser.runtime.sendMessage({ type: "updateHosts", data: "" }); // Notify popup
+        browser.runtime.sendMessage({ type: "updateHosts", data: "" }); // Update Attacked Hosts
     } else if (msg.type === "getURLS") {
         const extractedData = extractInfo(scanOutput);
+        stream = 0;
         let formattedOutput = `Extracted Markers:\n${extractedData.markers.join('\n')}`;
         console.log("Extracted Data Sent:", formattedOutput); // Debugging log
         browser.runtime.sendMessage({ type: "updateOutput", data: formattedOutput });
