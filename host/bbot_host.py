@@ -4,6 +4,7 @@ import json
 import subprocess
 import struct
 import os
+import re
 
 #SUBDOMAINS_FILE = "/home/flaxo/.bbot/scans/moist_craig/subdomains.txt"
 #SUBDOMAINS_FILE = ""
@@ -55,10 +56,12 @@ def run_scan(target, scantype, deadly, eventtype, moddep, flagtype, burp, viewty
     try:
         with open("output.txt", "w", encoding="utf-8") as output_file:
             process = subprocess.Popen(
-                cmd, stdout=subprocess.PIPE, stdin=subprocess.PIPE, stderr=subprocess.STDOUT, text=True, bufsize=1, universal_newlines=True
+                cmd, stdout=subprocess.PIPE, stdin=subprocess.PIPE, stderr=subprocess.STDOUT, bufsize=1, universal_newlines=True
             )
         
             for line in process.stdout:
+                ansi_escape = re.compile(r'\x1B(?:[@-Z\\-_]|\[[0-?]*[ -/]*[@-~])')
+                line = ansi_escape.sub('', line)
                 line = line.strip()
                 if line:
                     output_file.write(line + "\n")  
