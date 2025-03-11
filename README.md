@@ -4,7 +4,13 @@
 ## **Overview**  
 The **BBOT Firefox Extension** is designed for **bug bounty hunters** and **pentesters** who want to easily trigger **BBOT scans** directly from their browser. This extension helps automate reconnaissance by leveraging recent browsing history and user-defined targets.  
 
-## **Installation**  
+## Local Installation
+```bash
+git clone https://github.com/jackpas23/PBOT.git \
+cd PBOT
+./deploy.sh
+```
+## **Browser Installation**  
 1. Open **Firefox**.
 2. Navigate to **Extensions** (`about:addons`).  
 3. Click the **cog** (⚙️) in the top-right corner.  
