@@ -6,7 +6,7 @@ let port = null;
 let scanOutput = ""; // Store all BBOT output persistently while Firefox is running
 let subdomains ="";
 let hosts = new Set();
-let stream = 0;
+let stream = 1;
 let target = "";
 
 

@@ -8,7 +8,7 @@ import os
 #SUBDOMAINS_FILE = "/home/flaxo/.bbot/scans/moist_craig/subdomains.txt"
 #SUBDOMAINS_FILE = ""
 
-# ✅ **Send JSON message to Firefox**
+#  **Send JSON message to Firefox**
 def send_message(obj):
     try:
         message = json.dumps(obj).encode("utf-8")  # Encode JSON
@@ -20,7 +20,7 @@ def send_message(obj):
     except BrokenPipeError:
         sys.exit(1)  # Exit cleanly if Firefox disconnects
 
-# ✅ **Read JSON message from Firefox**
+#  **Read JSON message from Firefox**
 def read_message():
     raw_length = sys.stdin.buffer.read(4)  # Read exactly 4 bytes
     if not raw_length:
@@ -57,9 +57,7 @@ def run_scan(target, scantype, deadly, eventtype, moddep, flagtype, burp, viewty
             process = subprocess.Popen(
                 cmd, stdout=subprocess.PIPE, stdin=subprocess.PIPE, stderr=subprocess.STDOUT, text=True, bufsize=1, universal_newlines=True
             )
-            
-
-            
+        
             for line in process.stdout:
                 line = line.strip()
                 if line:
