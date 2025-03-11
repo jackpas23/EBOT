@@ -1,6 +1,3 @@
-Here's a clearer, more structured, and professional version of your README file:  
-
----
 
 # **BBOT Firefox Extension**  
 
