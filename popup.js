@@ -146,7 +146,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         if (message.type === "updateOutfileList") {
             updateDropdown(message.data);}
     });
-    getSubdomains.addEventListener("click", () => {
+    getSubdomains.addEventListener("change", () => {
         const selectedPath = getSubdomains.value;
         browser.runtime.sendMessage({ type: "getSubdomains" , subdomains: selectedPath });
     });

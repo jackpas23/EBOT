@@ -8,7 +8,7 @@ let subdomains ="";
 let hosts = new Set();
 let stream = 0;
 let target = "";
-let refresh = 0;
+
 
 function connectNative() {
     port = browser.runtime.connectNative("bbot_host");
@@ -48,7 +48,9 @@ function extractInfo(scanOutput) {
 function extractOutput(scanOutput) {
     console.log("Raw Scan Output:", scanOutput); 
     
-    const outputs = (scanOutput.match(logOutputs) || []).filter(file => !file.includes("wordcloud.tsv"));
+    const outputs = (scanOutput.match(logOutputs) || []).filter(
+        file => !/\b(wordcloud\.tsv|\.json|\.csv)\b/.test(file)
+    );
 
     const uniqueOutputs = [...new Set(outputs)];
 
@@ -133,6 +135,7 @@ browser.runtime.onMessage.addListener((msg) => {
             browser.runtime.sendMessage({ type: "updateOutfileList", data: ["No outfiles found"] });
         }
     } else if (msg.type === "getSubdomains") {
+        stream = 0;
         fetchSubdomains(msg.subdomains)
             .then(data => browser.runtime.sendMessage({ type: "updateOutput", data: data }))
             .catch(error => browser.runtime.sendMessage({ type: "updateOutput", data: error }));
