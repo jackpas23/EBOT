@@ -6,7 +6,7 @@ The **BBOT Firefox Extension** is designed for **bug bounty hunters** and **pent
 
 ## Local Installation
 ```bash
-git clone https://github.com/jackpas23/PBOT.git && cd PBOT && ./deploy.sh
+git clone https://github.com/jackpas23EBOT.git && cd PBOT && ./deploy.sh
 ```
 ## **Browser Installation**  
 1. Open **Firefox**.
