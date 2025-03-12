@@ -175,6 +175,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         setTimeout(() => {
             outputArea.scrollTop = outputArea.scrollHeight; 
             outputArea.scrollIntoView({ behavior: "smooth", block: "nearest" });
+            browser.runtime.sendMessage({ type: "getOutput" });
         }, 20);
         
     });

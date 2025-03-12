@@ -139,7 +139,6 @@ browser.runtime.onMessage.addListener((msg) => {
             browser.runtime.sendMessage({ type: "updateOutfileList", data: ["No outfiles found"] });
         }
     } else if (msg.type === "getSubdomains") {
-        stream = 0;
         fetchSubdomains(msg.subdomains)
             .then(data => browser.runtime.sendMessage({ type: "updateOutput", data: data }))
             .catch(error => browser.runtime.sendMessage({ type: "updateOutput", data: error }));
