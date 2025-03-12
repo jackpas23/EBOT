@@ -111,7 +111,7 @@ browser.runtime.onMessage.addListener((msg) => {
         stream = 1;
         browser.runtime.sendMessage({ type: "updateOutput", data: scanOutput });
     } else if (msg.type === "deployBbot") {
-        browser.runtime.sendMessage({ type: "updateOutput", data: "###################################\n In Your terminal Please Run This!!\n###################################\n \ngit clone https://github.com/jackpas23/PBOT.git && cd PBOT && ./deploy.sh" });
+        browser.runtime.sendMessage({ type: "updateOutput", data: "###################################\n In Your terminal Please Run This!!\n###################################\n \ngit clone https://github.com/jackpas23/EBOT.git && cd EBOT && ./deploy.sh" });
     } else if (msg.type === "killScan") {
         port.postMessage({command: "killScan"});
     } else if (msg.type === "getHosts") {

@@ -153,7 +153,8 @@ document.addEventListener("DOMContentLoaded", async () => {
         browser.runtime.sendMessage({ type: "clearOutput" });
     });
     myBtn.addEventListener("click", () => {
-        window.scrollTo({top:0, behavior: 'smooth'}) = 0;
+        document.body.scrollTop = 0; // For Safari
+        document.documentElement.scrollTop = 0;
     });
     extractStreamUrlsBtn.addEventListener("click", () => {
         browser.runtime.sendMessage({ type: "getURLS" });
